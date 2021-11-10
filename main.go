@@ -115,7 +115,11 @@ func fmtFile(file string, cfg *config) error {
 		var examples []*gherkin.DataTable
 		switch v := c.(type) {
 		case *gherkin.Background:
-			write(1, "Background: %s", strings.TrimSpace(v.Name))
+			if v.Name != "" {
+				write(1, "Background: %s", strings.TrimSpace(v.Name))
+			} else {
+				write(1, "Background:")
+			}
 			steps = v.Steps
 		case *gherkin.Scenario:
 			write(1, "Scenario: %s", strings.TrimSpace(v.Name))
